@@ -1,5 +1,5 @@
-import threading
 
+import threading
 import h2o
 import simple_websocket
 from flask import Flask, request, send_from_directory
@@ -61,17 +61,19 @@ def main(view: View):
         while True:
             iterations += 1
             var_name = f"var_{iterations}"
-            questions = "What is your"
+            questions = ""
             list_of_var_names = list(viewboxes.values())
-            or_of_var_names = " or ".join(list_of_var_names)
+
+            or_of_var_names = " ".join(list_of_var_names)
             questions = f"{questions} {or_of_var_names}"
             if iterations==1:
-                questions="What do you want to ask?"
+                questions=""
             questions+=" Do u want to quit? Type 'quit'."
             viewboxes[var_name] = create_viewbox(
                 view,
-                questions,
-                ""
+                "",
+                questions
+
             )
             if viewboxes[var_name]=="quit":
                 break
@@ -133,4 +135,3 @@ if __name__ == "__main__":
     finally:
         if not shutdown_requested.is_set():
             request_shutdown()
-
